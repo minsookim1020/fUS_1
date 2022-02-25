@@ -1,4 +1,4 @@
-tic
+%%
 [nz,nx,nt]=size(frame_007);
 
     m=zeros(nx*nz,nt);
@@ -30,11 +30,8 @@ tic
     IQR2=filter(B,A,IQR1,[],3);
     IQR2=IQR2(:,:,5:end);           % the first 4 temporal samples are eliminates (filter oscilations)
     PDI=mean(abs(IQR2).^2,3);     % computing the intensity of the blood signal the 
-toc    
-        % subplot(1,2,2);
+    
 imagesc(10*log10(PDI./max(PDI(:))));
-% imagesc(10*log10(PDI./max(max(PDI(:,100:175))))); 
-% caxis([-35 0]);
-caxis auto
+caxis([-35 0]); % or caxis auto
 colormap gray;
 title('PDI image')
