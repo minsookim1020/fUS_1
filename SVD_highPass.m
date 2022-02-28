@@ -2,6 +2,10 @@
 load (file_name, 'Data') ; %file_name is that what you want to do
 IQR = squeeze(Data.D.IQR) ; % IQR is 4-D, raw data form I saved. (depth x width x # of CUIs x # of frames)
 
+size_IQR = size(IQR);
+size_PDI_each = [size_IQR(1:2) size_IQR(4)];
+PDI_each = zeros(size_PDI_each);
+
 for fr = 1:size(IQR,4); 
     frame = IQR (:,:,:,fr);
     [nz,nx,nt]=size(frame);
@@ -41,3 +45,12 @@ for fr = 1:size(IQR,4);
     caxis([-15 0]); % or caxis auto
     colormap gray;
 title(fr)
+
+df = diff(PDI_each, 1, 3);
+for idf = 1:size(df, 3)
+    df_idv = df(:, :, idf);
+    subplot(size(df,3)/3,3,idf);
+    imagesc(df_idv); 
+    %caxis([-20  0]);% caxis auto;
+    colormap jet;
+end
